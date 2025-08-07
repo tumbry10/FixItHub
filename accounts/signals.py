@@ -19,9 +19,9 @@ def create_user_related_profiles(sender, instance, created, **kwargs):
 
         # Create SystemAdmin or SystmUser based on user_type
         if instance.user_type == 1:  # SystAdmin
-            SystemAdmin.objects.create(user=instance)
+            SystAdmin.objects.create(user=instance)
         elif instance.user_type == 2:  # SystUser
-            SalesRep.objects.create(user=instance)
+            SystUser.objects.create(user=instance)
 
 @receiver(post_save, sender=CustomUser)
 def save_user_profile(sender, instance, **kwargs):

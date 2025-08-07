@@ -7,7 +7,7 @@ class CustomUser(AbstractUser):
         (1, 'SystAdmin'),
         (2, 'SystUser'),
     )
-    user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, default='user')
+    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
 
     class Meta:
         db_table = 'users'
@@ -45,7 +45,7 @@ class UserProfile(models.Model):
     profile_picture = models.ImageField(upload_to='profile_pictures', blank=True, null=True)
 
     class Meta:
-        db_table = 'user_rofile'
+        db_table = 'user_profile'
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
