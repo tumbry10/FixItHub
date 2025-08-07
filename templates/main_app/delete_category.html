@@ -1,0 +1,22 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Delete Category {% endblock title %}
+
+{% block content %}
+    <h2>Delete Category: {{ category.name }}</h2>
+    <div>
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <p>Are you sure you want to delete Category {{ category.name }}?</p>
+        <button type="button">
+            <a href="{% url 'list_category' %}">Cancel</a>
+        </button>
+        <button type="submit">Submit</button>
+    </form>
+        
+    
+{% endblock content %}

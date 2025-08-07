@@ -1,0 +1,42 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Issues List {% endblock title %}
+
+{% block content %}
+    <h2>
+        List Of All Available Categories
+    </h2>
+    <div>
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    
+    {% if categories %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Created_By</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ category.name }}</td>
+                        <td>{{ category.created_by }}</td>
+                        <td>
+                            <a href="{% url 'update_category' category.id %}">Update</a>
+                            <a href="{% url 'delete_category' category.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>There are no Categories Yet, <a href="{% url 'create_category' %}">Create Category</a> here! </p>
+    {% endif %}
+{% endblock content %}

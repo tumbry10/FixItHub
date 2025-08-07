@@ -1,0 +1,22 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Delete Issue {% endblock title %}
+
+{% block content %}
+    <h2>Delete Issue {{ issue.title }}</h2>
+    <div>
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <p>Are you sure you want to delete Issue {{ issue.title }}?</p>
+        <button type="button">
+            <a href="{% url 'list_issue' %}">Cancel</a>
+        </button>
+        <button type="submit">Submit</button>
+    </form>
+        
+    
+{% endblock content %}

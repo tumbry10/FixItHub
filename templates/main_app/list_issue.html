@@ -1,0 +1,56 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Issues List {% endblock title %}
+
+{% block content %}
+    <h2>
+        {% if request.user.user_type == 1 %}
+            List Of All Reported Issues
+        {% else %}
+            My Reported Issues
+        {% endif %}
+    </h2>
+    <div>
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    
+    {% if issues %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    {% if request.user.user_type == 1 %}
+                        <th>Action</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for issue in issues %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ issue.title }}</td>
+                        <td>{{ issue.description }}</td>
+                        <td>{{ issue.status }}</td>
+                        {% if request.user.user_type == 1 %}
+                            <td>
+                                <a href="{% url 'update_issue' issue.id %}">Update</a>
+                                <a href="{% url 'delete_issue' issue.id %}">Delete</a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {% if request.user.user_type == 1 %}
+            <p>There are no Reported Issues</p>
+        {% else %}
+            <p>You Do not Have any Reported Issues Yet, Report an Issue Here <a href="{% url 'create_issue' %}">Report Issue</a></p>
+        {% endif %}
+    {% endif %}
+{% endblock content %}

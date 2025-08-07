@@ -1,0 +1,19 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Report New Issue {% endblock title %}
+
+{% block content %}
+    <h2>Report An Issues</h2>
+    <div>
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+        
+    
+{% endblock content %}

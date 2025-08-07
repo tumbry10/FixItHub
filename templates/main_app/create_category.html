@@ -1,0 +1,18 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Create Category {% endblock title %}
+
+{% block content %}
+    <h2>Create A New Category</h2>
+    <div>
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+{% endblock content %}

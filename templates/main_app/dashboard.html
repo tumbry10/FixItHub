@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'partials/base.html' %}
+
+{% block title %} Dashboard {% endblock title %}
+
+{% block content %}
     <h2>User Dashboard</h2>
     <div>
         {% for message in messages %}
@@ -20,6 +17,23 @@
         <a href="{% url 'login' %}">Login</a>
     {% endif %}
 
-    
-</body>
-</html>
+    {% if request.user.user_type == 1 %}
+        
+        <p>
+            View List of All Categories : <a href="{% url 'list_category' %}">Categories</a>
+        </p>
+        <p>
+            Create New Category : <a href="{% url 'create_category' %}">New Category</a>
+        </p>
+        <p>
+            View List of Reported Issues : <a href="{% url 'list_issue' %}">Reported Issues</a>
+        </p>
+    {% else %}
+        <p>
+            Report An Issue : <a href="{% url 'create_issue' %}">Report Issue</a>
+        </p>
+        <p>
+            View My Reported Issues : <a href="{% url 'list_issue' %}">My Reported Issues</a>
+        </p>
+    {% endif %}
+{% endblock content %}
