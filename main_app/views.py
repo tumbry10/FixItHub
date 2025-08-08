@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Category, Issue
 from .forms import IssueReportingForm, CategoryForm, IssueUpdateForm
@@ -117,3 +117,57 @@ def delete_issue(request, pk):
     }
     return render(request, 'main_app/delete_issue.html', context)
 
+@login_required
+def edit_my_issue(request, pk):
+    issue = get_object_or_404(Issue, id=pk)
+
+    #check user user_type
+    if request.user.user_type != 2:
+        messages.error(request, 'You are not authorized to edit this issue')
+        return redirect('list_issue')
+    
+    #Allow only the user who created the issue
+    if issue.reported_by != request.user:
+        messages.error(request, 'You are not authorized to edit this issue')
+        return redirect('list_issue')
+    
+    #Only allow editing if the status is 'Pending'
+    if issue.status != 'pending':
+        messages.error(request, 'You are not authorized to edit this issue, its already being actioned')
+        return redirect('list_issue')
+    
+    if request.method == 'POST':
+        form = IssueReportingForm(request.POST, instance=issue)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Issue updated successfully')
+            return redirect('list_issue')
+        else:
+            messages.error(request, 'Error updating issue')
+            return redirect('edit_issue', pk=pk)
+    else:
+        form = IssueReportingForm(instance=issue)
+    context = {
+        'form': form
+    }
+    return render(request, 'main_app/create_issue.html', context)
+
+def delete_my_issue(request, pk):
+    issue = get_object_or_404(Issue, id=pk)
+    if request.user.user_type != 2:
+        messages.error(request, 'You are not authorized to delete this issue')
+        return redirect('list_issue')
+    if issue.reported_by != request.user:
+        messages.error(request, 'You are not authorized to delete this issue')
+        return redirect('list_issue')
+    if issue.status != 'pending':
+        messages.error(request, 'You are not authorized to delete this issue, its already being actioned')
+        return redirect('list_issue')
+    if request.method == 'POST':
+        issue.delete()
+        messages.success(request, 'Issue deleted successfully')
+        return redirect('list_issue')
+    context = {
+        'issue': issue
+    }
+    return render(request, 'main_app/delete_issue.html', context)

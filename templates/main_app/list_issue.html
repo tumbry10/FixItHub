@@ -24,9 +24,7 @@
                     <th>Title</th>
                     <th>Description</th>
                     <th>Status</th>
-                    {% if request.user.user_type == 1 %}
-                        <th>Action</th>
-                    {% endif %}
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +38,11 @@
                             <td>
                                 <a href="{% url 'update_issue' issue.id %}">Update</a>
                                 <a href="{% url 'delete_issue' issue.id %}">Delete</a>
+                            </td>
+                        {% else %}
+                            <td>
+                                <a href="{% url 'edit_my_issue' issue.id %}">Update</a>
+                                <a href="{% url 'delete_my_issue' issue.id %}">Delete</a>
                             </td>
                         {% endif %}
                     </tr>

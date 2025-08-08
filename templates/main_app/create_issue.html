@@ -1,9 +1,17 @@
 {% extends 'partials/base.html' %}
 
-{% block title %} Report New Issue {% endblock title %}
+{% block title %} 
+    {% if form.instance.pk %} Update Issue {% else %} Report New Issue {% endif %}
+{% endblock title %}
 
 {% block content %}
-    <h2>Report An Issues</h2>
+    <h2>
+        {% if form.instance.pk %}
+            Updating Issue Details
+        {% else %}
+            Report An Issue
+        {% endif %}
+    </h2>
     <div>
         {% for message in messages %}
             <p>{{ message }}</p>
@@ -12,8 +20,9 @@
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Submit</button>
+        <button type="submit">
+            {% if form.instance.pk %} Update {% else %} Submit {% endif %}
+        </button>
     </form>
-        
-    
+
 {% endblock content %}
