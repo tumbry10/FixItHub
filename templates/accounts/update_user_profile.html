@@ -1,0 +1,17 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Edit User Profile {% endblock %}
+
+{% block content %}
+    <h2>Edit Profile</h2>
+    
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Profile</button>
+    </form>
+{% endblock %}
