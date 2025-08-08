@@ -138,3 +138,5 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
