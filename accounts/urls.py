@@ -1,10 +1,16 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
+from .forms import CustomLoginForm
+from .views import CustomLoginView
 
 urlpatterns = [
     path('register/', views.register_syst_user, name='register'),
-    path('login/', views.login_view, name='login'),
+    #path('login/', views.login_view, name='login'),
+    path('login/', CustomLoginView.as_view(
+        template_name='accounts/Login.html', 
+        authentication_form = CustomLoginForm), name='login'),
+    
     path('logout/', views.logout_view, name='logout'),
     path('profile/update/', views.update_user_profile, name='update_user_profile'),
     path('profile/', views.view_user_profile, name='view_user_profile'),

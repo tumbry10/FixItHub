@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from .models import CustomUser, SystUser, SystAdmin, UserProfile
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
 
 # Create your views here.
 def register_syst_user(request):
@@ -19,7 +20,7 @@ def register_syst_user(request):
     context = {'form': form}
     return render(request, 'accounts/register.html', context)
 
-def login_view(request):
+'''def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -33,11 +34,17 @@ def login_view(request):
     else:
         form = AuthenticationForm()
     context = {'form': form}
-    return render(request, 'accounts/login.html', context)
+    return render(request, 'accounts/login.html', context)'''
+
+class CustomLoginView(LoginView):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('dashboard') 
+        return super().dispatch(request, *args, **kwargs)
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('index')
 
 @login_required
 def update_user_profile(request):

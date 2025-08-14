@@ -5,8 +5,15 @@ from .forms import IssueReportingForm, CategoryForm, IssueUpdateForm
 from django.contrib import messages
 
 # Create your views here.
+def index(request):
+    return render(request, 'main_app/index.html')
+
 def dashboard(request):
-    return render(request, 'main_app/dashboard.html')
+    profile = request.user.userprofile
+    context = {
+        'profile': profile,
+    }
+    return render(request, 'main_app/dashboard.html', context)
 
 @login_required
 def create_category(request):

@@ -1,0 +1,35 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Home {% endblock title %}
+
+{% block content %}
+    <div class="container mt-4" style="text-align: center;">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card p-3 mt-4">
+                    <h5 class="card-title mt-3">Welcome to the Community Issue Tracker & Resource Hub</h5>
+                    <p class="card-text mt-3">
+                        FixItHub is a community-driven fault reporting system built to help local residents to report issues rising in their residential area to their service providers and get assistance. 
+                        It allows users to report issues (e.g., infrastructure faults), track their status, and get assistance from service providers. 
+                        It's designed to streamline communication between local residents and service providers.
+                    </p>
+                    <div class="">
+                        <p>
+                            New here? register to create your acoount and login to get access to the system. 
+                        </p>
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-4">
+                                <a href="{% url 'login' %}" class="btn btn-primary form-control">Login</a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="{% url 'register' %}" class="btn btn-secondary form-control">Register</a>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

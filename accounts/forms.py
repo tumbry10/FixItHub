@@ -1,5 +1,5 @@
 from django import forms 
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.db import models
 from . models import CustomUser, UserProfile
 
@@ -37,3 +37,9 @@ class UserProfileForm(forms.ModelForm):
             user.save()
             profile.save()
         return profile
+
+class CustomLoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control text-center', 'placeholder': 'Enter Your Username'}))
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'form-control text-center', 'placeholder': 'Enter Your Password'}))
