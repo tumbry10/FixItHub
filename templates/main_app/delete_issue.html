@@ -3,20 +3,28 @@
 {% block title %} Delete Issue {% endblock title %}
 
 {% block content %}
-    <h2>Delete Issue {{ issue.title }}</h2>
-    <div>
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
+<div class="container mt-3">
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="">
+                <h2 class="text-center card-title m-1 p-2">Delete Issue {{ issue.title }}</h2>
+                <div class="card-body">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <p class="text-center">Are you sure you want to delete Issue <strong>{{ issue.title }}</strong>?</p>
+                        <div class="row m-2 p-2">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4">
+                                <div class="justify-content-center">
+                                    <a href="{% url 'list_issue' %}" class="btn btn-primary">Cancel</a>
+                                    <button type="submit" class="btn btn-danger">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <form method="POST">
-        {% csrf_token %}
-        <p>Are you sure you want to delete Issue {{ issue.title }}?</p>
-        <button type="button">
-            <a href="{% url 'list_issue' %}">Cancel</a>
-        </button>
-        <button type="submit">Submit</button>
-    </form>
         
-    
 {% endblock content %}

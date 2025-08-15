@@ -3,6 +3,36 @@
 {% block title %} Dashboard {% endblock title %}
 
 {% block content %}
-    <h2>User Dashboard</h2>
+    <h2>Welcome : {{ profile.user.get_full_name }}</h2>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="{% url 'create_issue' %}" class="btn btn-warning form-control">Post Your Issue</a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{% url 'list_issue' %}" class="btn btn-info form-control">Your Reported Issues</a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{% url 'list_issue' %}" class="btn btn-primary form-control">All Reported Issues</a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{% url 'list_issue' %}" class="btn btn-secondary form-control">Pending Issues</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row m-2">
+            <div class="col-md-12">
+                {% for message in messages %}
+                    <div class="alert alert-success text-center">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
 {% endblock content %}

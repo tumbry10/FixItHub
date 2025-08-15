@@ -5,24 +5,67 @@
 {% endblock title %}
 
 {% block content %}
-    <h2>
-        {% if form.instance.pk %}
-            Updating Issue Details
-        {% else %}
-            Report An Issue
-        {% endif %}
-    </h2>
-    <div>
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <a href="{% url 'dashboard' %}" class="btn btn-info form-control">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">
-            {% if form.instance.pk %} Update {% else %} Submit {% endif %}
-        </button>
-    </form>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <h2 class="card-title text-center mt-3">
+                    {% if form.instance.pk %}
+                        Updating Issue Details
+                    {% else %}
+                        Report An Issue
+                    {% endif %}
+                </h2> <hr>
+                <div class="card-body">
+                    <div class="row p-2 m-1">
+                        {% for message in messages %}
+                            <div class="alert alert-success text-center">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label for="title">Title:</label>
+                                {{ form.title }}
+                                <span class="text-danger">{{ form.title.errors }}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="categor">Category:</label>
+                                {{ form.category }}
+                                <span class="text-danger">{{ form.category.errors }}</span>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label for="description">Description:</label>
+                                {{ form.description }}
+                                <span class="text-danger">{{ form.description.errors }}</span>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <button type="submit" class="btn btn-primary form-control">
+                                {% if form.instance.pk %} Update {% else %} Submit {% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+            
+</div>
 
 {% endblock content %}

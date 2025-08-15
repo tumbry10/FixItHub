@@ -8,6 +8,35 @@ class SystUserRegistrationForm(UserCreationForm):
     last_name = forms.CharField(required=True)
     email = forms.EmailField(required=True, max_length=254, help_text='Enter your email address.')
 
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control text-center',
+        'placeholder': 'Enter Your First Name'
+    }))
+
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control text-center',
+        'placeholder': 'Enter Your Last Name'
+    }))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control text-center',
+        'placeholder': 'Enter Your Email address'
+    }))
+
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control text-center',
+        'placeholder': 'Choose a Username to Use'
+    }))
+
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control text-center',
+        'placeholder': 'Enter Your Prefered Password'
+    }))
+
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control text-center',
+        'placeholder': 'Re-enter Your Password'
+    }))
+
     class Meta:
         model = CustomUser
         fields = ['first_name', 'last_name','username', 'email', 'password1', 'password2']

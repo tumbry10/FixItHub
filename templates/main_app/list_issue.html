@@ -3,57 +3,88 @@
 {% block title %} Issues List {% endblock title %}
 
 {% block content %}
-    <h2>
-        {% if request.user.user_type == 1 %}
-            List Of All Reported Issues
-        {% else %}
-            My Reported Issues
-        {% endif %}
-    </h2>
-    <div>
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <a href="{% url 'dashboard' %}" class="btn btn-info form-control">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    {% if issues %}
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for issue in issues %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ issue.title }}</td>
-                        <td>{{ issue.description }}</td>
-                        <td>{{ issue.status }}</td>
-                        {% if request.user.user_type == 1 %}
-                            <td>
-                                <a href="{% url 'update_issue' issue.id %}">Update</a>
-                                <a href="{% url 'delete_issue' issue.id %}">Delete</a>
-                            </td>
-                        {% else %}
-                            <td>
-                                <a href="{% url 'edit_my_issue' issue.id %}">Update</a>
-                                <a href="{% url 'delete_my_issue' issue.id %}">Delete</a>
-                            </td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        {% if request.user.user_type == 1 %}
-            <p>There are no Reported Issues</p>
-        {% else %}
-            <p>You Do not Have any Reported Issues Yet, Report an Issue Here <a href="{% url 'create_issue' %}">Report Issue</a></p>
-        {% endif %}
-    {% endif %}
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="card">
+                <h2 class="card-title text-center mt-3">
+                    {% if request.user.user_type == 1 %}
+                        List Of All Reported Issues
+                    {% else %}
+                        My Reported Issues
+                    {% endif %}
+                </h2>
+                <div class="row p-2 m-1">
+                    <div class="col-md-12">
+                        {% for message in messages %}
+                            <div class="alert alert-success text-center">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% if issues %}
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Date Reported</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for issue in issues %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ issue.title }}</td>
+                                        <td>{{ issue.description }}</td>
+                                        <td>
+                                            <span class="badge {% if issue.status == 'Resolved' %}bg-success{% elif issue.status == 'In Progress' %}bg-warning{% else %}bg-danger{% endif %}">
+                                                {{ issue.status }}
+                                            </span>
+                                        </td>
+                                        <td>{{ issue.created_at|date:"M d, Y" }}</td>
+                                        {% if request.user.user_type == 1 %}
+                                            <td>
+                                                <a href="{% url 'update_issue' issue.id %}">
+                                                    <span class="text-success"><i class="bi bi-pencil-square"></i></span>
+                                                </a>
+                                                <a href="{% url 'delete_issue' issue.id %}">Delete</a>
+                                            </td>
+                                        {% else %}
+                                            <td class="text-center">
+                                                <a href="{% url 'edit_my_issue' issue.id %}" class="me-3 text-decoration-none">
+                                                    <span class="text-success"><i class="bi bi-pencil-square"></i></span>
+                                                </a>
+                                                <a href="{% url 'delete_my_issue' issue.id %}">
+                                                    <span class="text-danger"><i class="bi bi-trash3"></i></span>
+                                                </a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% empty %}
+                                    <tr><td colspan="5" class="text-center">No issues reported yet.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
 {% endblock content %}
