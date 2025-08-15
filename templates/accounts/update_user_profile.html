@@ -3,15 +3,81 @@
 {% block title %} Edit User Profile {% endblock %}
 
 {% block content %}
-    <h2>Edit Profile</h2>
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="card mt-2">
+                <div class="card-body">
+                    <a href="{% url 'dashboard' %}" class="btn btn-info form-control">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body m-2">
+                    <h2 class="text-center">Edit Your Profile</h2> <hr>
+                </div>
+                <div class="m-2">
+                    {% for message in messages %}
+                        {% if message.tags == 'success' %}
+                            <div class="alert alert-success text-center">
+                                {{ message }}
+                            </div>
+                        {% elif message.tags == 'error' %}
+                            <div class="alert alert-danger text-center">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="p-2">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="first_name">First Name:</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="las_name">Last Name:</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="first_name">Phone Number:</label>
+                                <input type="text" class="form-control" id="phone_number" name="phone_number">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label for="Address">Address:</label>
+                                <textarea class="form-control" id="address" name="address"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="bio">Bio :</label>
+                                <textarea name="bio" id="bio" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label for="profile_picture">Profile Picture :</label>
+                                <input type="file" class="form-control" id="profile_picture" name="profile_picture">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <input type="submit" class="btn btn-primary form-control rounded-pill" value="Submit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
     
-    {% for message in messages %}
-        <p>{{ message }}</p>
-    {% endfor %}
-
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Update Profile</button>
-    </form>
 {% endblock %}

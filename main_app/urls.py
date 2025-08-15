@@ -20,4 +20,6 @@ urlpatterns = [
     #User edit & delete their own issue.
     path('issue_edit/<int:pk>/', views.edit_my_issue, name='edit_my_issue'),
     path('issue_delete/<int:pk>/', views.delete_my_issue, name='delete_my_issue'),
+
+    path('issue/details/<int:pk>/', views.issue_details, name='issue_details'),
 ]

@@ -1,0 +1,40 @@
+{% extends 'partials/base.html' %}
+
+{% block title %} Issue Details {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <a href="{% url 'dashboard' %}" class="btn btn-info form-control">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 class="text-center">Issue Details</h2><hr>
+    <div class="card">
+        <div class="card-body">
+            <h4>{{ issue.title }}</h4>
+            <p><strong>Description:</strong> {{ issue.description }}</p>
+            <p><strong>Status:</strong> {{ issue.status }}</p>
+            {% if request.user.user_type == 1 %}
+                <p><strong>Reported by:</strong> {{ issue.reported_by.get_full_name }}</p>
+            {% endif %}
+            <p><strong>Date reported:</strong> {{ issue.created_at }}</p>
+            {% if issue.image %}
+                <img src="{{ issue.image.url }}" alt="Issue image" class="img-fluid mt-2" style="max-height: 300px;">
+            {% endif %}
+        </div>
+    </div>
+
+    {% if can_edit %}
+        {% if request.user.user_type == 2 %}
+            <a href="{% url 'edit_my_issue' issue.id %}" class="btn btn-warning mt-3">Edit Issue</a>
+        {% elif request.user.user_type == 1 %}
+            <a href="{% url 'update_issue' issue.id %}" class="btn btn-primary mt-3">Edit Issue</a>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

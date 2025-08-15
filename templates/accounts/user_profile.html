@@ -3,29 +3,50 @@
 {% block title %} My Profile {% endblock title %}
 
 {% block content %}
-    <h2>My Profile</h2>
-    
-    {% if profile.profile_picture %}
-        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" width="150">
-    {% else %}
-        <p>No profile picture uploaded.</p>
-    {% endif %}
-    
-    <ul>
-        <li><strong>Username:</strong> {{ profile.user.username }}</li>
-        <li><strong>Email:</strong> {{ profile.user.email }}</li>
-        <li><strong>Full Name:</strong> {{ profile.user.get_full_name }}</li>
-        <li><strong>User Type:</strong> 
-            {% if profile.user.user_type == 1 %}
-                System Admin
-            {% elif profile.user.user_type == 2 %}
-                Customer
-            {% endif %}
-        </li>
-        <li><strong>Phone:</strong> {{ profile.phone_number }}</li>
-        <li><strong>Address:</strong> {{ profile.address }}</li>
-        <li><strong>Bio:</strong> {{ profile.bio }}</li>
-    </ul>
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="card mt-2">
+                <div class="card-body">
+                    <a href="{% url 'dashboard' %}" class="btn btn-info form-control">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <h2 class="text-center">My Profile</h2> <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="m-1">
+                            {% if profile.profile_picture %}
+                                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" width="100%" style="border-radius: 50%; height: 250px;">
+                            {% else %}
+                                <p>No profile picture uploaded.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <h4 class="m-2">Username: {{ profile.user.username }}</h4>
+                        <h4 class="m-2">Email: {{ profile.user.email }}</h4>
+                        <h4 class="m-2">Full Name: {{ profile.user.get_full_name }}</h4>
+                        <h4 class="m-2">Phone Number: {{ profile.phone_number }}</h4>
+                        <h4 class="m-2">Address: {{ profile.address }}</h4>
+                        <h4 class="m-2">Bio: {{ profile.bio }}</h4>
+                        <h4 class="m-2">Role: {% if profile.user.user_type == 1 %}System Admin 
+                            {% elif profile.user.user_type == 2 %} Customer {% endif %}
+                        </h4>
+                    </div>
+                </div>
+                <a href="{% url 'update_user_profile' %}" class="btn btn-outline-info rounded-pill mt-3 form-control">Edit Profile</a>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
 
-    <a href="{% url 'update_user_profile' %}">Edit Profile</a>
 {% endblock content %}
+</div>

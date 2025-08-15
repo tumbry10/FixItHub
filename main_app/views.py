@@ -59,6 +59,7 @@ def delete_category(request, pk):
         'category': category
     }
     return render(request, 'main_app/delete_category.html')
+
 @login_required
 def list_category(request):
     categories = Category.objects.all()
@@ -110,7 +111,7 @@ def update_issue(request, pk):
     context = {
         'form': form
     }
-    return render(request, 'main_app/create_issue.html', context)
+    return render(request, 'main_app/edit_issue.html', context)
 
 @login_required
 def delete_issue(request, pk):
@@ -178,3 +179,19 @@ def delete_my_issue(request, pk):
         'issue': issue
     }
     return render(request, 'main_app/delete_issue.html', context)
+
+def issue_details(request, pk):
+    issue = get_object_or_404(Issue, id=pk)
+
+    #check permissions
+    can_edit = False
+    if request.user.user_type == 2 and issue.reported_by == request.user and issue.status == 'pending':
+        can_edit = True
+    elif request.user.user_type == 1:
+        can_edit = True
+    
+    context = {
+        'issue': issue,
+        'can_edit': can_edit
+    }
+    return render(request, 'main_app/issue_details.html', context)

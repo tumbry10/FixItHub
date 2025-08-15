@@ -18,7 +18,7 @@ class IssueReportingForm(forms.ModelForm):
     )
     description = forms.CharField(widget=forms.Textarea(attrs={
         'class': 'form-control',
-        'placeholder': 'Enter Product Description',
+        'placeholder': 'Enter Fault Description',
         'rows': 3
     }))
 
@@ -28,6 +28,28 @@ class IssueReportingForm(forms.ModelForm):
 
 
 class IssueUpdateForm(forms.ModelForm):
+    title = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control text-center',
+        'placeholder': 'Enter your issue title',
+    }))
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.Select(attrs={
+            'class': 'form-control text-center',
+        }),
+        empty_label=" -- -Select Issue's Category- -- "
+    )
+    status = forms.ChoiceField(
+        choices=Issue.STATUS_CHOICES,
+        widget=forms.Select(attrs={
+            'class': 'form-control text-center',
+        })
+    )
+
+    description = forms.CharField(widget=forms.Textarea(attrs={
+        'class': 'form-control',
+        'placeholder': 'Enter Product Description',
+        'rows': 3
+    }))
+
     class Meta:
         model = Issue
         fields = ['title', 'description', 'status', 'category', 'reported_by']
