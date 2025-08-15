@@ -1,1 +1,1 @@
-web: gunicorn FixItHub.wsgi
+web: gunicorn fixithub_project.wsgi
