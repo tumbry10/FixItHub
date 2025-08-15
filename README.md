@@ -103,3 +103,6 @@
 <img src="screenshots/UserProfile.png" width="800">
 
 9. [**Admin Dashboard**]
+
+## License
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
